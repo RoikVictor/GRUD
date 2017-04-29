@@ -7,8 +7,9 @@
  */
 echo "HELLO WORLD";
 
-$dt = new DateTime('Wed, 21 Jul 2017 00:28:50 GMT');
-echo $dt->format('U'); // 1279672130
+//$dt = new DateTime('Wed, 21 Jul 2017 00:28:50 GMT');
+//echo $dt->format('U'); // 1279672130
+//echo $dt->getTimestamp();
 ?>
 <form method="post" action="index.php">
     <input type="text" placeholder="name" name "name">
