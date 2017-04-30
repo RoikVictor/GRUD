@@ -1,10 +1,9 @@
-<form method="post" action="../index.php">
-    <input type="text"  name="name">
-    </br>
-    <input type="text"   name="description">
-    </br>
-    <input type="date" placeholder="created_at" name="created_at" value="<?php echo date('Y-m-d') ?>">
-    </br>
-    <input type="submit">
-</form>
+<?php
 
+foreach ($rows as $sel)
+    {
+        echo $sel['name']," | ",$sel['description']," | ";
+        echo $el['name']. '' .$el['id']. ' <a href="../edit.php?id='.$sel['id'].'">Edit</a>';
+        echo $el['name']. '' .$el['id']. ' <a href="../delete.php?id='.$sel['id'].'">Del</a> <br>';
+    }
+?>

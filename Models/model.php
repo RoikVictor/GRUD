@@ -13,7 +13,6 @@ class Article
         return $pdo_conn;
     }
 
-
     public function insert($name, $description, $created_at)
     {
         $getConn = $this->getConnection();
@@ -27,9 +26,7 @@ class Article
         return $pdo_statement->errorInfo();
             //$getConn->lastInsertId();
     }
-    /**
-     * @return array
-     */
+
     public function select()
     {
         $getConn = $this->getConnection();
@@ -39,48 +36,7 @@ class Article
         $result = $pdo_statement->fetchAll();
         return $result;
     }
-    /**
-     * @param $name
-     * @param $description
-     * @param $created_at
-     * @param $id
-     * @return bool
-     */
-    public function update($name, $description, $created_at, $id)
-    {
-        $getConn = $this->getConnection();
-        $sql = "UPDATE article SET name = :name, 
-        description = :description,
-        created_at = :created_at 
-        WHERE id = :id";
-        $pdo_statement = $getConn->prepare($sql);
-        $pdo_statement->bindValue(":name", $name);
-        $pdo_statement->bindValue(":description", $description);
-        $pdo_statement->bindValue(":created_at", $created_at);
-        $pdo_statement->bindValue(":id", $id);
-        $result = $pdo_statement->execute();
-        return $result;
-    }
-    /**
-     * @param $id
-     * @return mixed
-     */
-    public function postById($id)
-    {
-        $getConn = $this->getConnection();
-        $sql = ('SELECT * FROM article WHERE id = :id');
-        $pdo_statement = $getConn->prepare($sql);
-        $pdo_statement->execute(array(':id' => $id));
-        $result = $pdo_statement->fetch();
-        return $result;
-    }
-    /**
-     * @param $name
-     * @param $description
-     * @param $created_at
-     * @param $id
-     * @return bool
-     */
+
     public function updateById($name, $description, $created_at, $id)
     {
         $getConn = $this->getConnection();
@@ -96,16 +52,50 @@ description = :description,
         $result = $pdo_statement->execute();
         return $result;
     }
-    /**
-     * @param $id
-     * @return bool
-     */
+
     public function deleteById($id)
     {
         $getConn = $this->getConnection();
         $sql = "DELETE FROM article WHERE id=:id";
         $pdo_statement = $getConn->prepare($sql);
         $pdo_statement->bindValue(":id", $id);
+        $result = $pdo_statement->execute();
+        return $result;
+    }
+
+//--------------------------------------------------------------------
+
+    public function selectAll()
+    {
+      $getConn = $this->getConnection() ;
+      $sql = "SELECT * from article";
+      $pdo_statment = $getConn->prepare($sql);
+      $pdo_statment->execute();
+      return $pdo_statment->fetchAll();
+    }
+
+    public function findById($id)
+    {
+        $getConn = $this->getConnection();
+        $sql = ('SELECT * FROM article WHERE id = :id');
+        $pdo_statement = $getConn->prepare($sql);
+        $pdo_statement->execute(array(':id' => $id));
+        $result = $pdo_statement->fetch();
+        return $result;
+    }
+
+    public function update( $id,$name, $description, $created_at)
+    {
+        $getConn = $this->getConnection();
+        $sql = "UPDATE article SET name = :name, 
+        description = :description,
+        created_at = :created_at 
+        WHERE id = :id";
+        $pdo_statement = $getConn->prepare($sql);
+        $pdo_statement->bindValue(":id", $id);
+        $pdo_statement->bindValue(":name", $name);
+        $pdo_statement->bindValue(":description", $description);
+        $pdo_statement->bindValue(":created_at", $created_at);
         $result = $pdo_statement->execute();
         return $result;
     }
