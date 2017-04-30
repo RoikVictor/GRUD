@@ -1,55 +1,15 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: roik
- * Date: 29.04.17
- * Time: 15:57
- */
-echo "HELLO WORLD";
 
-?>
-<form method="post" action="index.php">
-    <input type="text" placeholder="name" name "name">
-    <br>
-    <input type="text" placeholder="description" name "description">
-    <br>
-   <input type="text" placeholder="created_at" name "created_at">
-    <br>
-    <input type="submit">
-</form>
+require_once 'Models/model.php';
 
-<?php
 
-$dsn = 'mysql:dbname=CRUD;host=127.0.0.1';
-$user = 'root';
-$password = 'root';
+/*if (isset($_POST['name']) && isset($_POST['description']) && isset($_POST['created_at'])) {*/
+if (!empty($_POST["name"]) && !empty($_POST["description"]))
+{
+    echo $_POST['name'];
 
-try {
-     $dbh = new PDO($dsn, $user, $password);
-    }
-    catch (PDOException $e) {
-        echo 'Подключение не удалось: ' . $e->getMessage();
+    $insert = new Article();
+    $id = $insert->insert($_POST['name'], $_POST['description'], $_POST['created_at']);
 }
-        $sql = 'INSERT INTO article (name,description,created_at) VALUES (:name,:description,:created_at)';
-        $statement =$dbh->prepare($sql);
 
-        if (!empty($statement))
-
-            {
-                echo 'Вставили запись ';
-               /* $statement->bindParam(':name', $_POST['name'], PDO::PARAM_STR);
-                $statement->bindParam(':description', $_POST['description'], PDO::PARAM_STR);
-                $statement->bindParam(':created_at', $_POST['created_at'], PDO::PARAM_STR);*/
-                $statement->bindValue(':name', $_POST['name']);
-                $statement->bindValue(':description', $_POST['description']);
-                $statement->bindValue(':created_at', $_POST['created_at']);
-
-                var_dump($statement->execute());
-            }
-            else
-            {
-                echo 'Banana!';
-
-            }
-?>
-
+require_once 'Views/IndexTemplate.php';
